@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Core
@@ -8,77 +7,97 @@ namespace Core
     {
         private GameManager _gameManager;
 
-        [Header("Platform Related")]
+        [Header("Platform")]
         public GameObject platformPrefab;
-        public GameObject platformContainer;
-        
-        private const int InstantiateModifier = 10;
-        private int _platformSpawnAmount;
-        
-        private Vector3 _platformSpawnOffset;
-        private List<GameObject> _platformList;
+        public GameObject finishPlatformPrefab;
 
-        [Header("Obstacle Related")]
+        private float _platformScaleModifier;
+        private float _platformPositionModifier;
+
+
+        [Header("Obstacle")]
         public GameObject obstaclePrefab;
 
-        private List<GameObject> _obstacleList;
+        [Header("Collectable")]
+        public GameObject collectableCubePrefab;
+
+        private const int ObstacleHeight = 3;
 
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
             
-            _platformList = new List<GameObject>();
-            _obstacleList = new List<GameObject>();
-            
-            _platformSpawnOffset = new Vector3(0f, 0f, 12f);
-            _platformSpawnAmount = _gameManager.currentLevel * InstantiateModifier;
-            
-            InstantiatePlatforms();
+            _platformScaleModifier = _gameManager.currentLevel * 5f;
+            _platformPositionModifier = _platformScaleModifier * 5f;
         }
 
-        private void InstantiatePlatforms()
+        private void Start()
         {
-            for (int i = 0; i < _platformSpawnAmount; i++)
-            {
-                GameObject platform = Instantiate(platformPrefab, Vector3.zero, Quaternion.identity);
-                if (i > 0)
-                {
-                    platform.transform.position += _platformSpawnOffset;
-                    _platformSpawnOffset.z += 12f;
-                }
-                platform.transform.SetParent(platformContainer.transform);
-               _platformList.Add(platform);
-            }
-            InstantiateObstacles();
+            InstantiatePlatform();
         }
-        
 
-        private void InstantiateObstacles()
+        private void InstantiatePlatform()
+        {
+            GameObject platform = Instantiate(platformPrefab, Vector3.zero, Quaternion.identity);
+
+            platform.transform.localScale = new Vector3(.5f, 1f, _platformScaleModifier);
+            platform.transform.position = new Vector3(0f, 0f, _platformPositionModifier);
+            platform.name = "Platform";
+
+            InstantiateObstacles(platform);
+            InstantiateFinishPlatform(platform);
+        }
+
+        private void InstantiateObstacles(GameObject platform)
         {
             const int width = 10;
+            const int eachWallCount = width * 3;
             const float xOffset = .5f;
             const float yOffset = .5f;
 
-            Vector3 startPos = new Vector3(.3f, .8f, 10f);
+            int obstacleAmount = (_gameManager.currentLevel * eachWallCount * 2 + _gameManager.currentLevel * eachWallCount) - eachWallCount;
             
-            for (int i = 0; i < width * 3; i++)
+            Vector3 startPos = new Vector3(-2.25f, 0f, 15f);
+
+            for (int i = 0; i < obstacleAmount; i++)
             {
                 GameObject obstacle = Instantiate(obstaclePrefab, startPos, Quaternion.identity);
+                Debug.Log("a");
 
                 if (i > 0)
                 {
-                    startPos.x += xOffset;
-                    obstacle.transform.position = startPos;
+                  startPos.x += xOffset;
+                  obstacle.transform.position = startPos;
                 }
 
                 if (i % width == 0)
                 {
-                    startPos.x = .3f;
+                    startPos.x = -2.25f;
                     startPos.y += yOffset;
                     obstacle.transform.position = startPos;
                 }
-                _obstacleList.Add(obstacle);
+
+                if (i % (width * ObstacleHeight) == 0)
+                {
+                    startPos.z += 15f;
+                    startPos.y = -.25f + yOffset;
+                    obstacle.transform.position = startPos;
+                }
+
+                obstacle.transform.SetParent(platform.transform);
             }
+        }
+
+        private void InstantiateFinishPlatform(GameObject platform)
+        {
+            Vector3 spawnPos = new Vector3(0f,0f,platform.transform.GetChild(0).position.z + 5f);
+            GameObject finishPlatform = Instantiate(finishPlatformPrefab, spawnPos, Quaternion.identity);
+            finishPlatform.transform.SetParent(platform.transform);
+        }
+
+        private void InstantiateCollectableCube()
+        {
+            
         }
     }
 }
