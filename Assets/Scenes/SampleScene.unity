@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 339635894}
   - component: {fileID: 339635893}
   - component: {fileID: 339635892}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CollectedCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,9 +367,10 @@ GameObject:
   - component: {fileID: 871922481}
   - component: {fileID: 871922480}
   - component: {fileID: 871922479}
+  - component: {fileID: 871922483}
   - component: {fileID: 871922478}
   - component: {fileID: 871922482}
-  - component: {fileID: 871922483}
+  - component: {fileID: 871922484}
   m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
@@ -481,6 +482,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 2
+--- !u!114 &871922484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871922477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e8ec8ab54aed3439a91e43b04c7e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1409123814
 GameObject:
   m_ObjectHideFlags: 0
