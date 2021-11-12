@@ -8,6 +8,8 @@ namespace Platform
     {
         private GameManager _gameManager;
 
+        private PlatformMovement _platformMovement;
+
         public GameObject platformPrefab, platformContainer;
         public GameObject finishPlatformPrefab;
 
@@ -18,6 +20,7 @@ namespace Platform
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
+            _platformMovement = FindObjectOfType<PlatformMovement>();
             
             _platformScaleModifier = _gameManager.currentLevel * 4.5f;
             _platformPositionModifier = _platformScaleModifier * 5f;

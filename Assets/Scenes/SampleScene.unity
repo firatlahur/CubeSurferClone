@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 709900185}
   - component: {fileID: 709900186}
   - component: {fileID: 709900187}
+  - component: {fileID: 709900188}
   m_Layer: 0
   m_Name: InstantiateManager
   m_TagString: Untagged
@@ -340,6 +341,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformContainer: {fileID: 1409123814}
+--- !u!114 &709900188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709900183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bfe9c3e103a5a41b9d52c74b0e17b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformContainer: {fileID: 1409123814}
+  pinkScorePrefab: {fileID: 5515660962413517488, guid: 9233ef9283c663a45a8e585591f4c002,
+    type: 3}
 --- !u!1 &871922477
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +368,9 @@ GameObject:
   - component: {fileID: 871922480}
   - component: {fileID: 871922479}
   - component: {fileID: 871922478}
-  m_Layer: 0
+  - component: {fileID: 871922482}
+  - component: {fileID: 871922483}
+  m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,6 +453,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &871922482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871922477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462c50a77f1706f4c8a033db7163c60a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &871922483
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871922477}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 124
+  m_CollisionDetection: 2
 --- !u!1 &1409123814
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,13 +588,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.033935037, y: -0.11876869, z: 0.0040615583, w: 0.99233365}
+  m_LocalRotation: {x: 0.034038983, y: -0.14763756, z: 0.0030708725, w: 0.9884508}
   m_LocalPosition: {x: 4.56, y: 7.6, z: -10.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 3.9170003, y: -13.650001, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.9110003, y: -16.998001, z: -0.22900002}
 --- !u!114 &1687258586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +741,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2062247955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062247956}
+  - component: {fileID: 2062247957}
+  m_Layer: 0
+  m_Name: PlatformMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2062247956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062247955}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2062247957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062247955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fb058d4351ef541948884a37a76404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformContainer: {fileID: 1409123814}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace Core
     [Serializable]
     public class GameManager : GenericSingleton<GameManager>
     {
-        [HideInInspector]public bool isGameStarted;
+        public bool isGameStarted;
         
         public int currentLevel, totalPurpleScore;
         public ObstacleSkin obstacleSkin;
