@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RedSkin
   m_EditorClassIdentifier: 
   obstacleSkinList:
-  - {fileID: 887581002403983739, guid: d42d687a21721bc4e8e4956a5437643e, type: 3}
-  - {fileID: 887581002403983739, guid: 06435b4497440b74e941c08d8e4d52c6, type: 3}
-  - {fileID: 887581002403983739, guid: 19ce329b1e6a57f41b1d064170b76c6c, type: 3}
-  - {fileID: 887581002403983739, guid: 6c543dcd6df742f45b1a8ce8c1122400, type: 3}
-  - {fileID: 887581002403983739, guid: d2f643d40f6ac7b42ab709966d7bff93, type: 3}
+  - {fileID: 887581002403983739, guid: 5b1a24f260b3dd04089ffd1ed38be772, type: 3}
+  - {fileID: 887581002403983739, guid: 2b0c382d588f1214ab86aa9281b04212, type: 3}
+  - {fileID: 887581002403983739, guid: 5e9fdbd798f951140bb3b768d87daa21, type: 3}
+  - {fileID: 887581002403983739, guid: 303ab6de4bac51f41b279045f3014207, type: 3}
+  - {fileID: 887581002403983739, guid: fa4ab4f2c2960d642ad46664de9e8707, type: 3}

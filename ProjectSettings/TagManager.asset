@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - Obstacle
-  - 
+  - CollisionTracker
   - 
   - CollectableCube
   - Player

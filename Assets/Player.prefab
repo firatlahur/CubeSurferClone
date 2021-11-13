@@ -232,4 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformContainer: {fileID: 0}
-  collisionTracker: {fileID: 0}
+  go: {fileID: 0}
+  count: 0
+  _collectedCubes: []

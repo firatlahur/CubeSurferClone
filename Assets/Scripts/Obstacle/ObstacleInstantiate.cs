@@ -41,6 +41,7 @@ namespace Obstacle
                     _startPos, Quaternion.identity);
                 
                 obstacleList.Add(obstacle.transform.position);
+                obstacle.name = "i: " + i;
 
                 if (i > 0)
                 {
