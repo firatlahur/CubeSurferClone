@@ -32,9 +32,9 @@ namespace Player
                     other.transform.parent = null;
                     CollectableCube(other.gameObject);
                     break;
-                // case ObstacleLayer:
-                //     Obstacle(other.gameObject);
-                //     break;
+                case ObstacleLayer:
+                    Obstacle(other.gameObject);
+                    break;
             }
         }
 
