@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformContainer: {fileID: 1409123814}
   obstacleList: []
+  zOffsetList: []
 --- !u!114 &709900186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformContainer: {fileID: 1409123814}
+  obstacleInstantiate: {fileID: 709900185}
 --- !u!114 &709900188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +669,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 570820117471377396, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022838774102026555, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1

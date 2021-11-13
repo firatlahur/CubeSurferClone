@@ -23,7 +23,7 @@ namespace Player
 
         public List<GameObject> _collectedCubes;
         private List<GameObject> _obstacleList;
-        private Dictionary<GameObject, int> _obstacleDict;
+        private Dictionary<GameObject, float> _obstacleDict;
 
         private GameObject _veryFirstCollectedCube;
         private int _valuePair;
@@ -36,7 +36,7 @@ namespace Player
             _gameManager = FindObjectOfType<GameManager>();
             _veryFirstCollectedCube = transform.GetChild(0).gameObject;
             _collectedCubes = new List<GameObject> { _veryFirstCollectedCube };
-            _obstacleDict = new Dictionary<GameObject, int>();
+            _obstacleDict = new Dictionary<GameObject, float>();
             _obstacleList = new List<GameObject>();
         }
 
@@ -103,29 +103,33 @@ namespace Player
                     return;
                 }
 
-                foreach (GameObject gObj in _obstacleList)
+                foreach (GameObject gObj in _obstacleList) // digeri de child counta gore value = childCount
                 {
-                    _obstacleDict.Add(gObj, gObj.transform.childCount);
+                    _obstacleDict.Add(gObj, Vector3.Distance(transform.position,gObj.transform.position));
                 }
 
-                int max = _obstacleDict.Values.Max();
+                float min = _obstacleDict.Values.Min();
+                
+                
+                Debug.Log("max: " + min);
 
+                Vector3 offset = new Vector3();
+                int childCount = 0;
 
-                Debug.Log("max: " + max);
-
-                float xOffset = 0;
-
-                foreach (KeyValuePair<GameObject, int> obstacleDictKey in _obstacleDict)
+                foreach (KeyValuePair<GameObject, float> obstacleDictKey in _obstacleDict)
                 {
-                    if (obstacleDictKey.Value == max)
+                    if (obstacleDictKey.Value == min)
                     {
-                        xOffset = obstacleDictKey.Key.gameObject.transform.position.x;
+                        GameObject other = obstacleDictKey.Key.gameObject;
+
+                        childCount = obstacleDictKey.Key.gameObject.transform.childCount;
+                        offset = other.transform.position;
                     }
                 }
 
-                for (int i = 0; i < max; i++)
+                for (int i = 0; i < childCount; i++)
                 {
-                    if (_collectedCubes.Count < max)
+                    if (_collectedCubes.Count < childCount)
                     {
                         _gameManager.isGameStarted = false;
                         Debug.Log("game over");
@@ -133,15 +137,16 @@ namespace Player
                     }
                     else
                     {
-                        _collectedCubes[_collectedCubes.Count - 1].gameObject.transform
-                            .SetParent(platformContainer.transform);
+                        Transform go = _collectedCubes[_collectedCubes.Count - 1].gameObject.transform;
                         
-                        _collectedCubes[_collectedCubes.Count - 1].transform.position += new Vector3(0f, .5f * i, 0f);
+                        go.SetParent(platformContainer.transform);
 
-                        _collectedCubes[_collectedCubes.Count - 1].transform.position = new Vector3(
-                            xOffset,
-                            _collectedCubes[_collectedCubes.Count - 1].transform.position.y,
-                            _collectedCubes[_collectedCubes.Count - 1].transform.position.z);
+                        float y = go.position.y + (.5f * i);
+                        
+                        go.position = new Vector3(
+                            offset.x,
+                            y,
+                            offset.z - .5f);
 
                         _collectedCubes.RemoveAt(_collectedCubes.Count - 1);
                         

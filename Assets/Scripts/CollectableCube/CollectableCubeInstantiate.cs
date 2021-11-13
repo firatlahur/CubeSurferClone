@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Core;
+using Obstacle;
 using Platform;
 using ScriptableObjects.CollectableCube;
 using UnityEngine;
@@ -15,6 +18,7 @@ namespace CollectableCube
         
         private CollectableCubeSkin _collectableCube;
         private PlatformInstantiate _finishLine;
+        public ObstacleInstantiate obstacleInstantiate;
 
         private Vector3 _startPos;
 
@@ -39,16 +43,38 @@ namespace CollectableCube
             _collectableCube = _gameManager.collectableCubeSkin;
             InstantiateCollectableCube();
         }
-
         private void InstantiateCollectableCube()
         {
             for (int i = 0; i < _collectableCubeSpawnAmount; i++)
             {
-                GameObject collectableCube = Instantiate(_collectableCube.collectableCubeSkin[Random.Range(0,_collectableCube.collectableCubeSkin.Count)], Vector3.zero,
+                Vector3 testPos = CalculateCollectableCubePosition(i);
+
+                bool x = false;
+
+                for (int j = 0; j < obstacleInstantiate.zOffsetList.Count; j++)
+                {
+                    float dist = Vector3.Distance(testPos, new Vector3(0f, 0f, obstacleInstantiate.zOffsetList[j]));
+                    
+                    if(dist < 2.5f)
+                    {
+                        x = true;
+                        Debug.Log(dist);
+                        break;
+                    }
+                }
+                if (x)
+                {
+                    _collectableCubeSpawnAmount--;
+                    continue;
+                }
+
+                GameObject collectableCube = Instantiate(
+                    _collectableCube.collectableCubeSkin[
+                        Random.Range(0, _collectableCube.collectableCubeSkin.Count)], Vector3.zero,
                     Quaternion.identity);
-                
-                collectableCube.transform.position = CalculateCollectableCubePosition(i);
+                collectableCube.transform.position = testPos;
                 collectableCube.transform.SetParent(platformContainer.transform);
+                obstacleInstantiate.zOffsetList.Add(collectableCube.transform.position.z);
             }
         }
 

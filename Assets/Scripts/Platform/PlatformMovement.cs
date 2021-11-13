@@ -18,7 +18,7 @@ namespace Platform
         {
             _gameManager = FindObjectOfType<GameManager>();
             _platformInstantiate = FindObjectOfType<PlatformInstantiate>();
-            _movementSpeed = 4f;
+            _movementSpeed = 10f;
         }
 
         private IEnumerator Start()

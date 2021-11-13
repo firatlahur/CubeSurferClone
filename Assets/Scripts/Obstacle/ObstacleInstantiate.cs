@@ -14,6 +14,7 @@ namespace Obstacle
         
         private Vector3 _startPos;
         public List<Vector3> obstacleList;
+        public List<float> zOffsetList;
 
         private int _obstacleSpawnAmount;
         
@@ -23,6 +24,7 @@ namespace Obstacle
 
             _startPos = new Vector3(-2.25f, .25f, 20f);
             obstacleList = new List<Vector3>();
+            zOffsetList = new List<float>();
 
             _obstacleSpawnAmount = _gameManager.currentLevel * 2 * 10;
         }
@@ -59,11 +61,17 @@ namespace Obstacle
             
             _startPos.x += xOffset;
 
+            if (i == 10)
+            {
+                zOffsetList.Add(_startPos.z);
+            }
+            
             switch (i % 10)
             {
                 case 0:
                     _startPos.z += zOffset;
                     _startPos.x = -2.25f;
+                    zOffsetList.Add(_startPos.z);
                     break;
             }
 
