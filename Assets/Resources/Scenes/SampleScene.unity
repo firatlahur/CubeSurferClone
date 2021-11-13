@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 339635893}
   - component: {fileID: 339635892}
   m_Layer: 12
-  m_Name: CollectedCube
+  m_Name: VeryFirstCollectedCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f71ab5dfefe17d44b2eada61bbb9905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGameStarted: 0
+  isGameStarted: 1
   currentLevel: 1
   totalPurpleScore: 0
   obstacleSkin: {fileID: 11400000, guid: ca90337115267094da22b2936cbe8c26, type: 2}
@@ -770,7 +770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2062247956
 Transform:
   m_ObjectHideFlags: 0

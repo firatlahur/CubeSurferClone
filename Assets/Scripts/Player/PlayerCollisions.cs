@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,46 +6,74 @@ namespace Player
 {
     public class PlayerCollisions : MonoBehaviour
     {
+
         private const int ObstacleLayer = 8;
         private const int CollectableCubeLayer = 11;
         private const int PlayerLayer = 12;
         private const int PurpleScoreLayer = 13;
 
         private List<GameObject> _collectedCubes;
+        private GameObject _veryFirstCollectedCube;
+
+        private const float YOffset = .25f;
 
         private void Awake()
         {
-            _collectedCubes = new List<GameObject>();
-            _collectedCubes.Add(transform.GetChild(0).gameObject);
+            _veryFirstCollectedCube = transform.GetChild(0).gameObject;
+            _collectedCubes = new List<GameObject> { _veryFirstCollectedCube };
+            Debug.Log(_collectedCubes.Count);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == CollectableCubeLayer)
+            switch (other.gameObject.layer)
             {
-                CollectableCube(other.gameObject);
+                case CollectableCubeLayer:
+                    other.transform.parent = null;
+                    CollectableCube(other.gameObject);
+                    break;
+                // case ObstacleLayer:
+                //     Obstacle(other.gameObject);
+                //     break;
             }
         }
+
 
         private void CollectableCube(GameObject collectableCube)
         {
             collectableCube.gameObject.layer = PlayerLayer;
-            collectableCube.transform.parent = null;
 
             Vector3 lastCubePos = new Vector3(
                 _collectedCubes.Last().transform.position.x,
-                0f,
+                YOffset,
                 _collectedCubes.Last().transform.position.z);
-
-            collectableCube.transform.position = lastCubePos;
-            collectableCube.transform.SetParent(transform);
-            _collectedCubes.Add(collectableCube.gameObject);
 
             Transform player = transform;
             Vector3 playerPosition = player.position;
 
+            collectableCube.transform.SetParent(player);
+
             playerPosition = new Vector3(playerPosition.x, playerPosition.y + .5f, playerPosition.z);
             player.position = playerPosition;
+            collectableCube.transform.position = lastCubePos;
+
+            _collectedCubes.Add(collectableCube.gameObject);
+        }
+
+        private void Obstacle(GameObject obstacle)
+        {
+            int count = 0;
+            count++;
+            
+            obstacle.GetComponent<BoxCollider>().enabled = false;
+
+            for (int i = 0; i < count; i++)
+            {
+                _collectedCubes[i].transform.parent = null;
+                _collectedCubes[i].transform.SetParent(obstacle.transform);
+            }
+            
+
         }
     }
 }
