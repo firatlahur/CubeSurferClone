@@ -25,6 +25,11 @@ namespace CollectableCube
         private int _collectableCubeSpawnAmount;
         private float _finishLinePosition, _zOffset;
 
+        private const int OneRowOfWall = 10;
+        
+        private const float PlatformScale = 2.25f;
+        private const float SpawnDistanceOffset = 2.5f;
+
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
@@ -43,49 +48,53 @@ namespace CollectableCube
             _collectableCube = _gameManager.collectableCubeSkin;
             InstantiateCollectableCube();
         }
+
         private void InstantiateCollectableCube()
         {
             for (int i = 0; i < _collectableCubeSpawnAmount; i++)
             {
-                Vector3 testPos = CalculateCollectableCubePosition(i);
-
-                bool x = false;
-
-                for (int j = 0; j < obstacleInstantiate.zOffsetList.Count; j++)
-                {
-                    float dist = Vector3.Distance(testPos, new Vector3(0f, 0f, obstacleInstantiate.zOffsetList[j]));
-                    
-                    if(dist < 2.5f)
-                    {
-                        x = true;
-                        Debug.Log(dist);
-                        break;
-                    }
-                }
-                if (x)
-                {
-                    _collectableCubeSpawnAmount--;
-                    continue;
-                }
+                Vector3 positionTest = new Vector3();
 
                 GameObject collectableCube = Instantiate(
                     _collectableCube.collectableCubeSkin[
                         Random.Range(0, _collectableCube.collectableCubeSkin.Count)], Vector3.zero,
                     Quaternion.identity);
-                collectableCube.transform.position = testPos;
+
+                collectableCube.transform.position = CalculateCollectableCubePosition(i,positionTest);
                 collectableCube.transform.SetParent(platformContainer.transform);
-                obstacleInstantiate.zOffsetList.Add(collectableCube.transform.position.z);
+
+                obstacleInstantiate.instantiatePositionCheckList.Add(collectableCube.transform.position.z);
             }
         }
 
-        private Vector3 CalculateCollectableCubePosition(int i)
+        private Vector3 CalculateCollectableCubePosition(int i, Vector3 positionTest)
         {
-            int wallCount = _gameManager.currentLevel * 2 + 1;
-            _startPos.x = Random.Range(-2.25f, 2.25f);
-            
-            if (i / wallCount == 10)
+            bool isSpawnNearAnotherObj = false;
+
+            foreach (float zPos in obstacleInstantiate.instantiatePositionCheckList)
             {
-                _zOffset += 20f;
+                float spawnDistance = Vector3.Distance(positionTest,
+                    new Vector3(0f, 0f, zPos));
+
+                if (spawnDistance < SpawnDistanceOffset)
+                {
+                    isSpawnNearAnotherObj = true;
+                    break;
+                }
+            }
+
+            if (isSpawnNearAnotherObj)
+            {
+                _collectableCubeSpawnAmount--;
+            }
+
+            int totalWallCount = _gameManager.currentLevel * 2 + 1;
+            const float zOffset = 20f;
+            _startPos.x = Random.Range(-PlatformScale, PlatformScale);
+            
+            if (i / totalWallCount == OneRowOfWall)
+            {
+                _zOffset += zOffset;
             }
 
             _startPos.z = Random.Range(_zOffset, _finishLinePosition);

@@ -13,8 +13,9 @@ namespace Obstacle
         private ObstacleSkin _obstacle;
         
         private Vector3 _startPos;
-        public List<Vector3> obstacleList;
-        public List<float> zOffsetList;
+        
+        public List<float> instantiatePositionCheckList;
+        private List<Vector3> _obstacleList;
 
         private int _obstacleSpawnAmount;
         
@@ -23,8 +24,8 @@ namespace Obstacle
             _gameManager = FindObjectOfType<GameManager>();
 
             _startPos = new Vector3(-2.25f, .25f, 20f);
-            obstacleList = new List<Vector3>();
-            zOffsetList = new List<float>();
+            _obstacleList = new List<Vector3>();
+            instantiatePositionCheckList = new List<float>();
 
             _obstacleSpawnAmount = _gameManager.currentLevel * 2 * 10;
         }
@@ -42,8 +43,7 @@ namespace Obstacle
                 GameObject obstacle = Instantiate(_obstacle.obstacleSkinList[Random.Range(0, _obstacle.obstacleSkinList.Count)],
                     _startPos, Quaternion.identity);
                 
-                obstacleList.Add(obstacle.transform.position);
-                obstacle.name = "i: " + i;
+                _obstacleList.Add(obstacle.transform.position);
 
                 if (i > 0)
                 {
@@ -61,17 +61,17 @@ namespace Obstacle
             
             _startPos.x += xOffset;
 
-            if (i == 10)
+            if (i == 10) //first walls
             {
-                zOffsetList.Add(_startPos.z);
+                instantiatePositionCheckList.Add(_startPos.z);
             }
             
-            switch (i % 10)
+            switch (i % 10) //other walls
             {
                 case 0:
                     _startPos.z += zOffset;
                     _startPos.x = -2.25f;
-                    zOffsetList.Add(_startPos.z);
+                    instantiatePositionCheckList.Add(_startPos.z);
                     break;
             }
 

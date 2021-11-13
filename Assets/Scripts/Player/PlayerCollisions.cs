@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Core;
@@ -11,25 +10,21 @@ namespace Player
     {
         private GameManager _gameManager;
         
-        public GameObject platformContainer, go;
-
-        public int count;
+        public GameObject platformContainer;
 
         private const int ObstacleLayer = 8;
-        private const int CollisionTrackerLayer = 9;
         private const int CollectableCubeLayer = 11;
         private const int PlayerLayer = 12;
         private const int PurpleScoreLayer = 13;
+        
+        private const float CollectableCubeYOffset = .25f;
+        private const float PlayerYOffset = .5f;
 
-        public List<GameObject> _collectedCubes;
-        private List<GameObject> _obstacleList;
+        private List<GameObject> _collectedCubes;
         private Dictionary<GameObject, float> _obstacleDict;
 
         private GameObject _veryFirstCollectedCube;
-        private int _valuePair;
         private bool _isCollided;
-
-        private const float YOffsetCollectableCube = .25f;
 
         private void Awake()
         {
@@ -37,7 +32,6 @@ namespace Player
             _veryFirstCollectedCube = transform.GetChild(0).gameObject;
             _collectedCubes = new List<GameObject> { _veryFirstCollectedCube };
             _obstacleDict = new Dictionary<GameObject, float>();
-            _obstacleList = new List<GameObject>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -72,16 +66,15 @@ namespace Player
 
             Vector3 lastCubePos = new Vector3(
                 _collectedCubes.Last().transform.position.x,
-                YOffsetCollectableCube,
+                CollectableCubeYOffset,
                 _collectedCubes.Last().transform.position.z);
 
             Transform player = transform;
             Vector3 playerPosition = player.position;
 
             collectableCube.transform.SetParent(player);
-            //collectableCube.transform.SetSiblingIndex(0);
 
-            playerPosition = new Vector3(playerPosition.x, playerPosition.y + .5f, playerPosition.z);
+            playerPosition = new Vector3(playerPosition.x, playerPosition.y + PlayerYOffset, playerPosition.z);
             player.position = playerPosition;
             collectableCube.transform.position = lastCubePos;
 
@@ -89,47 +82,39 @@ namespace Player
         }
         
         
-        private bool col;
 
         private void Obstacle(GameObject obstacle)
         {
-            if (obstacle.gameObject.layer == ObstacleLayer && !col)
+            if (!_isCollided)
             {
                 obstacle.GetComponent<BoxCollider>().enabled = false;
-                _obstacleList.Add(obstacle);
+                
+                _obstacleDict.Add(obstacle,Vector3.Distance(transform.position,obstacle.transform.position));
 
-                if (_obstacleList.Count < 2)
+                if (_obstacleDict.Count < 2)
                 {
                     return;
                 }
 
-                foreach (GameObject gObj in _obstacleList) // digeri de child counta gore value = childCount
-                {
-                    _obstacleDict.Add(gObj, Vector3.Distance(transform.position,gObj.transform.position));
-                }
-
-                float min = _obstacleDict.Values.Min();
+                float nearestObstacleZPosition = _obstacleDict.Values.Min();
                 
-                
-                Debug.Log("max: " + min);
-
-                Vector3 offset = new Vector3();
-                int childCount = 0;
+                Vector3 firstCollidedCubePosition = new Vector3();
+                int collectedCubesChildCount = 0;
 
                 foreach (KeyValuePair<GameObject, float> obstacleDictKey in _obstacleDict)
                 {
-                    if (obstacleDictKey.Value == min)
+                    if (obstacleDictKey.Value == nearestObstacleZPosition)
                     {
-                        GameObject other = obstacleDictKey.Key.gameObject;
+                        GameObject firstCollidedCube = obstacleDictKey.Key.gameObject;
 
-                        childCount = obstacleDictKey.Key.gameObject.transform.childCount;
-                        offset = other.transform.position;
+                        collectedCubesChildCount = obstacleDictKey.Key.gameObject.transform.childCount;
+                        firstCollidedCubePosition = firstCollidedCube.transform.position;
                     }
                 }
 
-                for (int i = 0; i < childCount; i++)
+                for (int i = 0; i < collectedCubesChildCount; i++)
                 {
-                    if (_collectedCubes.Count < childCount)
+                    if (_collectedCubes.Count < collectedCubesChildCount)
                     {
                         _gameManager.isGameStarted = false;
                         Debug.Log("game over");
@@ -137,34 +122,34 @@ namespace Player
                     }
                     else
                     {
-                        Transform go = _collectedCubes[_collectedCubes.Count - 1].gameObject.transform;
-                        
-                        go.SetParent(platformContainer.transform);
+                        Transform collectedCubesTransform = _collectedCubes[_collectedCubes.Count - 1].transform;
 
-                        float y = go.position.y + (.5f * i);
-                        
-                        go.position = new Vector3(
-                            offset.x,
-                            y,
-                            offset.z - .5f);
+                        collectedCubesTransform.SetParent(platformContainer.transform);
+
+                        float collectedCubesYOffset = collectedCubesTransform.position.y + (PlayerYOffset * i);
+
+                        collectedCubesTransform.position = new Vector3(
+                            firstCollidedCubePosition.x,
+                            collectedCubesYOffset,
+                            firstCollidedCubePosition.z - PlayerYOffset);
 
                         _collectedCubes.RemoveAt(_collectedCubes.Count - 1);
-                        
-                        transform.position -= new Vector3(0f, .5f, 0f);
+
+                        transform.position -= new Vector3(0f, PlayerYOffset, 0f);
                     }
                 }
+
                 _obstacleDict.Clear();
-                _obstacleList.Clear();
-                StartCoroutine(nameof(TurnOffCollision));
+                StartCoroutine(nameof(ObstacleCollisionPause));
             }
         }
 
 
-        private IEnumerator TurnOffCollision()
+        private IEnumerator ObstacleCollisionPause()
         {
-            col = true;
+            _isCollided = true;
             yield return new WaitForSecondsRealtime(1f);
-            col = false;
+            _isCollided = false;
         }
     }
 }
