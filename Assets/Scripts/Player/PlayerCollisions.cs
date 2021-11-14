@@ -96,8 +96,6 @@ namespace Player
 
             _collectedCubes.Add(collectableCube.gameObject);
         }
-        
-        
 
         private void Obstacle(GameObject obstacle)
         {
@@ -153,8 +151,7 @@ namespace Player
                 StartCoroutine(nameof(ObstacleCollisionPause));
             }
         }
-
-
+        
         private IEnumerator ObstacleCollisionPause()
         {
             _isCollided = true;
