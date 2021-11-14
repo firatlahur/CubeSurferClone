@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Core;
+using ScriptableObjects.CollectableCube;
 using ScriptableObjects.Obstacle;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,18 @@ namespace UI
         public Button greenSkinUseButton;
         public TextMeshProUGUI greenSkinPurchaseButtonText;
         public TextMeshProUGUI greenSkinUseButtonText;
+        
+        [Header("Blue Collectable Skin")]
+        public Button blueSkinPurchaseButton;
+        public Button blueSkinUseButton;
+        public TextMeshProUGUI blueSkinPurchaseButtonText;
+        public TextMeshProUGUI blueSkinUseButtonText;
+        
+        [Header("Orange Collectable Skin")]
+        public Button orangeSkinPurchaseButton;
+        public Button orangeSkinUseButton;
+        public TextMeshProUGUI orangeSkinPurchaseButtonText;
+        public TextMeshProUGUI orangeSkinUseButtonText;
         
         public void Awake()
         {
@@ -62,6 +75,30 @@ namespace UI
                 greenSkinUseButtonText.text = "In Use";
                 greenSkinUseButton.interactable = false;
             }
+            
+            if (_gameManager.isPurchasedBlueCollectableCubeSkin)
+            {
+                blueSkinPurchaseButton.interactable = false;
+                blueSkinPurchaseButtonText.text = "Owned";
+            }
+
+            if (_gameManager.collectableCubeSkin.name == "BlueSkin")
+            {
+                blueSkinUseButtonText.text = "In Use";
+                blueSkinUseButton.interactable = false;
+            }
+            
+            if (_gameManager.isPurchasedOrangeCollectableCubeSkin)
+            {
+                orangeSkinPurchaseButton.interactable = false;
+                orangeSkinPurchaseButtonText.text = "Owned";
+            }
+
+            if (_gameManager.collectableCubeSkin.name == "OrangeSkin")
+            {
+                orangeSkinUseButtonText.text = "In Use";
+                orangeSkinUseButton.interactable = false;
+            }
         }
 
         public void PurchaseRedSkin()
@@ -97,6 +134,40 @@ namespace UI
                 StartCoroutine(Error("Not enough gold."));
             }
         }
+        
+        public void PurchaseBlueSkin()
+        {
+            if (_gameManager.totalGold >= 250 && !_gameManager.isPurchasedBlueCollectableCubeSkin)
+            {
+                _gameManager.collectableCubeSkin = Resources.Load("CollectableCube/BlueSkin") as CollectableCubeSkin;
+                _gameManager.totalGold -= 250;
+                blueSkinPurchaseButton.interactable = false;
+                blueSkinPurchaseButtonText.text = "Owned";
+                _gameManager.isPurchasedBlueCollectableCubeSkin = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("Not enough gold."));
+            }
+        }
+        
+        public void PurchaseOrangeSkin()
+        {
+            if (_gameManager.totalGold >= 250 && !_gameManager.isPurchasedOrangeCollectableCubeSkin)
+            {
+                _gameManager.collectableCubeSkin = Resources.Load("CollectableCube/OrangeSkin") as CollectableCubeSkin;
+                _gameManager.totalGold -= 250;
+                orangeSkinPurchaseButton.interactable = false;
+                orangeSkinPurchaseButtonText.text = "Owned";
+                _gameManager.isPurchasedOrangeCollectableCubeSkin = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("Not enough gold."));
+            }
+        }
 
         public void UseRedSkin()
         {
@@ -120,6 +191,36 @@ namespace UI
                 _gameManager.obstacleSkin = Resources.Load("Obstacle/GreenSkin") as ObstacleSkin;
                 greenSkinUseButtonText.text = "In Use";
                 greenSkinUseButton.interactable = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("You do not own this."));
+            }
+        }
+        
+        public void UseBlueSkin()
+        {
+            if (_gameManager.isPurchasedBlueCollectableCubeSkin && _gameManager.collectableCubeSkin.name != "BlueSkin")
+            {
+                _gameManager.collectableCubeSkin = Resources.Load("CollectableCube/BlueSkin") as CollectableCubeSkin;
+                blueSkinUseButtonText.text = "In Use";
+                blueSkinUseButton.interactable = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("You do not own this."));
+            }
+        }
+        
+        public void UseOrangeSkin()
+        {
+            if (_gameManager.isPurchasedOrangeCollectableCubeSkin && _gameManager.collectableCubeSkin.name != "OrangeSkin")
+            {
+                _gameManager.collectableCubeSkin = Resources.Load("CollectableCube/OrangeSkin") as CollectableCubeSkin;
+                orangeSkinUseButtonText.text = "In Use";
+                orangeSkinUseButton.interactable = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             else

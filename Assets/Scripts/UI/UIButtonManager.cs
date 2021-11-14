@@ -17,11 +17,14 @@ namespace UI
         public GameObject goldText;
         public TextMeshProUGUI goldAmountText;
         public GameObject backButton;
+        public TextMeshProUGUI actualGameLevelText;
+        public TextMeshProUGUI currentLevelText;
 
         [Header("Skin Panel")]
         public GameObject skinsButton;
         public GameObject skinTypeListImage;
         public GameObject obstacleSkins;
+        public GameObject collectableCubeSkins;
 
         public void Awake()
         {
@@ -32,6 +35,7 @@ namespace UI
         {
             yield return new WaitForEndOfFrame();
             goldAmountText.text = _gameManager.totalGold.ToString();
+            actualGameLevelText.text = _gameManager.currentLevel.ToString();
         }
 
         public void StartGame()
@@ -49,6 +53,8 @@ namespace UI
             goldText.SetActive(false);
             goldAmountText.gameObject.SetActive(false);
             skinsButton.SetActive(false);
+            currentLevelText.gameObject.SetActive(false);
+            actualGameLevelText.gameObject.SetActive(false);
         }
 
         public void Back()
@@ -58,6 +64,9 @@ namespace UI
             goldText.SetActive(true);
             goldAmountText.gameObject.SetActive(true);
             skinsButton.SetActive(true);
+            currentLevelText.gameObject.SetActive(true);
+            actualGameLevelText.gameObject.SetActive(true);
+            collectableCubeSkins.SetActive(false);
             backButton.SetActive(false);
 
 
@@ -84,6 +93,14 @@ namespace UI
         {
             skinTypeListImage.SetActive(false);
             obstacleSkins.SetActive(true);
+            goldText.SetActive(true);
+            goldAmountText.gameObject.SetActive(true);
+        }
+        
+        public void CollectableCubeSkins()
+        {
+            skinTypeListImage.SetActive(false);
+            collectableCubeSkins.SetActive(true);
             goldText.SetActive(true);
             goldAmountText.gameObject.SetActive(true);
         }

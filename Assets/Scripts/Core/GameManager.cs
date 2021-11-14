@@ -11,9 +11,11 @@ namespace Core
     [Serializable]
     public class GameManager : GenericSingleton<GameManager>
     {
-        [HideInInspector]public bool isGameStarted;
-        public bool isPurchasedRedObstacleSkin;
-        public bool isPurchasedGreenObstacleSkin;
+        [HideInInspector] public bool isGameStarted;
+        [HideInInspector] public bool isPurchasedRedObstacleSkin;
+        [HideInInspector] public bool isPurchasedGreenObstacleSkin;
+        [HideInInspector] public bool isPurchasedBlueCollectableCubeSkin;
+        [HideInInspector] public bool isPurchasedOrangeCollectableCubeSkin;
         
         public int currentLevel, totalGold;
         public ObstacleSkin obstacleSkin;
