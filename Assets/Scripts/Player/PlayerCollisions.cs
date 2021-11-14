@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core;
+using UI;
 using UnityEngine;
 
 namespace Player
@@ -10,7 +11,9 @@ namespace Player
     {
         private GameManager _gameManager;
         
-        public GameObject platformContainer, platformMovement;
+        public GameObject platformContainer, obstacleGameOver, stairsGameOver;
+
+        public UIButtonManager uiButtonManager;
 
         private const int ObstacleLayer = 8;
         private const int FinishLayer = 9;
@@ -126,6 +129,7 @@ namespace Player
                     if (transform.childCount <= 1)
                     {
                         _gameManager.isGameStarted = false;
+                        obstacleGameOver.SetActive(true);
                         Debug.Log("game over");
                         Debug.Log("place game over materials");
                     }
@@ -176,6 +180,7 @@ namespace Player
                 if (transform.childCount <= 1)
                 {
                     _gameManager.isGameStarted = false;
+                    Finish();
                     Debug.Log("game ENDED");
                     Debug.Log("place game ENDED materials");
                 }
@@ -196,7 +201,7 @@ namespace Player
 
         private void Finish()
         {
-            Debug.Log("GAME ENDED X20");
+            uiButtonManager.SetEndGameResults(stairCount, purpleScoreCount, transform.childCount);
             StartCoroutine(nameof(FinishPostpone));
         }
 
@@ -204,8 +209,7 @@ namespace Player
         {
             yield return new WaitForSecondsRealtime(.2f);
             _gameManager.isGameStarted = false;
-            Debug.Log("current cubes: " + transform.childCount);
-            Debug.Log("purples collected:" + purpleScoreCount);
+            stairsGameOver.SetActive(true);
         }
 
         private void PurpleScore(GameObject purpleScore)

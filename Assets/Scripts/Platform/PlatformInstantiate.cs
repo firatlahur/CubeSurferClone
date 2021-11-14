@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using Core;
+using UI;
 using UnityEngine;
 
 namespace Platform
@@ -7,8 +9,7 @@ namespace Platform
     public class PlatformInstantiate : MonoBehaviour
     {
         private GameManager _gameManager;
-
-        private PlatformMovement _platformMovement;
+        [SerializeField] private InGameUIManager inGameUI;
 
         public GameObject platformPrefab, finishPlatformPrefab, platformContainer, stairPrefab, finishBonusScorePrefab;
 
@@ -23,10 +24,6 @@ namespace Platform
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
-            _platformMovement = FindObjectOfType<PlatformMovement>();
-            
-            _platformScaleModifier = _gameManager.currentLevel * 4.5f;
-            _platformPositionModifier = _platformScaleModifier * 5f;
         }
 
         private void Start()
@@ -37,6 +34,9 @@ namespace Platform
         private void InstantiatePlatform()
         {
             GameObject platform = Instantiate(platformPrefab, Vector3.zero, Quaternion.identity);
+            
+            _platformScaleModifier = _gameManager.currentLevel * 4.5f;
+            _platformPositionModifier = _platformScaleModifier * 5f;
 
             platform.transform.localScale = new Vector3(.5f, 1f, _platformScaleModifier);
             platform.transform.position = new Vector3(0f, 0f, _platformPositionModifier);
@@ -63,9 +63,11 @@ namespace Platform
             stair.layer = StairLayer;
 
             GameObject finishBonusScore = Instantiate(finishBonusScorePrefab,
-                stair.transform.position + new Vector3(-2f, 9.25f, 79f), Quaternion.identity);
+                stair.transform.position + new Vector3(-2.5f, 9.25f, 79f), Quaternion.identity);
             finishBonusScore.transform.SetParent(platformContainer.transform);
             finishBonusScore.layer = FinishLayer;
+            
+            inGameUI.platform = finishBonusScore;
         }
     }
 }

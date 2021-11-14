@@ -34,6 +34,7 @@ namespace Core
 
         public void SaveProgress()
         {
+            isGameStarted = false;
             json = JsonUtility.ToJson(this);
             string compress = Compress(json);
             File.WriteAllText(Application.dataPath + "/GameDetails.json", compress);

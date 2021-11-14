@@ -3,32 +3,47 @@ using System.Collections;
 using Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace UI
 {
     public class UIButtonManager : MonoBehaviour
     {
         private GameManager _gameManager;
+        private InGameUIManager _inGameUIManager;
 
         [Header("Start Panel")]
-        public GameObject startBackground;
-        public GameObject gameNameText;
-        public GameObject startButton;
-        public GameObject goldText;
-        public TextMeshProUGUI goldAmountText;
-        public GameObject backButton;
-        public TextMeshProUGUI actualGameLevelText;
-        public TextMeshProUGUI currentLevelText;
+        [SerializeField] private GameObject startBackground;
+        [SerializeField] private GameObject gameNameText;
+        [SerializeField] private GameObject startButton;
+        [SerializeField] private GameObject goldText;
+        [SerializeField] private TextMeshProUGUI goldAmountText;
+        [SerializeField] private GameObject backButton;
+        [SerializeField] private TextMeshProUGUI actualGameLevelText;
+        [SerializeField] private TextMeshProUGUI currentLevelText;
 
         [Header("Skin Panel")]
-        public GameObject skinsButton;
-        public GameObject skinTypeListImage;
-        public GameObject obstacleSkins;
-        public GameObject collectableCubeSkins;
+        [SerializeField] private GameObject skinsButton;
+        [SerializeField] private GameObject skinTypeListImage;
+        [SerializeField] private GameObject obstacleSkins;
+        [SerializeField] private GameObject collectableCubeSkins;
+
+        [Header("Game Over Panel")]
+        [SerializeField] private GameObject obstacleGameOver;
+        [SerializeField] private Button retryButton;
+        [SerializeField] private Button skipLevelButton;
+        [SerializeField] private GameObject stairsGameOver;
+        [SerializeField] private TextMeshProUGUI collectedGold;
+        [SerializeField] private TextMeshProUGUI stairsCount;
+        [SerializeField] private TextMeshProUGUI purpleScoreCount;
+        [SerializeField] private TextMeshProUGUI collectedCubesCount;
 
         public void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
+            _inGameUIManager = FindObjectOfType<InGameUIManager>();
         }
 
         private IEnumerator Start()
@@ -44,6 +59,8 @@ namespace UI
             startBackground.SetActive(false);
             backButton.SetActive(false);
             TurnOffStartingScreenItems();
+            
+            _inGameUIManager.InitiateInGameUI();
         }
 
         private void TurnOffStartingScreenItems()
@@ -103,6 +120,37 @@ namespace UI
             collectableCubeSkins.SetActive(true);
             goldText.SetActive(true);
             goldAmountText.gameObject.SetActive(true);
+        }
+
+        public void Retry()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void SkipLevel()
+        {
+            if (_gameManager.currentLevel < 5)
+            {
+                _gameManager.currentLevel++;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                _gameManager.currentLevel = Random.Range(1, 5);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+
+        public void SetEndGameResults(int stairCount, int purpleCount, int collectedCubeCount)
+        {
+            int grandTotal = (stairCount + purpleCount + collectedCubeCount) * 2;
+            stairsCount.text = stairCount.ToString();
+            purpleScoreCount.text = purpleCount.ToString();
+            collectedCubesCount.text = collectedCubeCount.ToString();
+
+            collectedGold.text = "Gold: " + "+" + grandTotal;
+
+            _gameManager.totalGold += grandTotal;
         }
     }
 }

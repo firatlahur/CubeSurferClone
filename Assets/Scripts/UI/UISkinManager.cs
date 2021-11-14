@@ -15,29 +15,29 @@ namespace UI
         private GameManager _gameManager;
         public TextMeshProUGUI errorText;
 
-        [Header("Red Obstacle Skin")]
-        public Button redSkinPurchaseButton;
-        public Button redSkinUseButton;
-        public TextMeshProUGUI redSkinPurchaseButtonText;
-        public TextMeshProUGUI redSkinUseButtonText;
+        [Header("Red Obstacle Skin")] 
+        [SerializeField] private Button redSkinPurchaseButton;
+        [SerializeField] private Button redSkinUseButton;
+        [SerializeField] private TextMeshProUGUI redSkinPurchaseButtonText;
+        [SerializeField] private TextMeshProUGUI redSkinUseButtonText;
         
         [Header("Green Obstacle Skin")]
-        public Button greenSkinPurchaseButton;
-        public Button greenSkinUseButton;
-        public TextMeshProUGUI greenSkinPurchaseButtonText;
-        public TextMeshProUGUI greenSkinUseButtonText;
+        [SerializeField] private Button greenSkinPurchaseButton;
+        [SerializeField] private Button greenSkinUseButton;
+        [SerializeField] private TextMeshProUGUI greenSkinPurchaseButtonText;
+        [SerializeField] private TextMeshProUGUI greenSkinUseButtonText;
         
         [Header("Blue Collectable Skin")]
-        public Button blueSkinPurchaseButton;
-        public Button blueSkinUseButton;
-        public TextMeshProUGUI blueSkinPurchaseButtonText;
-        public TextMeshProUGUI blueSkinUseButtonText;
+        [SerializeField] private Button blueSkinPurchaseButton;
+        [SerializeField] private Button blueSkinUseButton;
+        [SerializeField] private TextMeshProUGUI blueSkinPurchaseButtonText;
+        [SerializeField] private TextMeshProUGUI blueSkinUseButtonText;
         
         [Header("Orange Collectable Skin")]
-        public Button orangeSkinPurchaseButton;
-        public Button orangeSkinUseButton;
-        public TextMeshProUGUI orangeSkinPurchaseButtonText;
-        public TextMeshProUGUI orangeSkinUseButtonText;
+        [SerializeField] private Button orangeSkinPurchaseButton;
+        [SerializeField] private Button orangeSkinUseButton;
+        [SerializeField] private TextMeshProUGUI orangeSkinPurchaseButtonText;
+        [SerializeField] private TextMeshProUGUI orangeSkinUseButtonText;
         
         public void Awake()
         {
