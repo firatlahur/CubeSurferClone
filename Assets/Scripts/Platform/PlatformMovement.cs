@@ -18,14 +18,14 @@ namespace Platform
         {
             _gameManager = FindObjectOfType<GameManager>();
             _platformInstantiate = FindObjectOfType<PlatformInstantiate>();
-            _movementSpeed = 8f;
+            _movementSpeed = 10f;
         }
 
         private IEnumerator Start()
         {
             yield return new WaitForEndOfFrame();
             platformContainer.transform.SetParent(transform);
-            _destination = _platformInstantiate.finishLineTransform.position * -2;
+            _destination = _platformInstantiate.finishLineTransform.position * -5;
         }
 
         private void Update()

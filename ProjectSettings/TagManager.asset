@@ -14,8 +14,8 @@ TagManager:
   - 
   - 
   - Obstacle
-  - CollisionTracker
-  - 
+  - Finish
+  - Stairs
   - CollectableCube
   - Player
   - PurpleScore

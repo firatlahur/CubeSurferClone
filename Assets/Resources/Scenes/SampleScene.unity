@@ -216,8 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformContainer: {fileID: 1409123814}
-  obstacleList: []
-  zOffsetList: []
+  instantiatePositionCheckList: []
 --- !u!114 &709900186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,8 +231,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 2883727925660053487, guid: f11c65349c3d5e549bd1c7586299465b,
     type: 3}
-  platformContainer: {fileID: 1409123814}
   finishPlatformPrefab: {fileID: 2052717510728221169, guid: bb109d93a86dc3140b96f885134122f2,
+    type: 3}
+  platformContainer: {fileID: 1409123814}
+  stairPrefab: {fileID: 91621566202529715, guid: 9f6b69f38b5d02e47b55ed892020e867,
+    type: 3}
+  finishBonusScorePrefab: {fileID: 1626899439936789580, guid: af7c904ca61e9cb4cb6a581c7055fc78,
     type: 3}
   finishLineTransform: {fileID: 0}
 --- !u!114 &709900187
@@ -305,6 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
+  - component: {fileID: 1687258583}
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   m_Layer: 0
@@ -322,6 +326,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
   m_Enabled: 1
+--- !u!114 &1687258583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33db6a9a51e4ea40b338d33399fccf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -703,6 +719,11 @@ PrefabInstance:
       propertyPath: collisionTracker
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2022838774768794811, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+        type: 3}
+      propertyPath: platformMovement
+      value: 
+      objectReference: {fileID: 2062247955}
     - target: {fileID: 2022838774768794811, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
         type: 3}
       propertyPath: platformContainer

@@ -14,7 +14,7 @@ namespace Obstacle
         
         private Vector3 _startPos;
         
-        public List<float> instantiatePositionCheckList;
+        [HideInInspector]public List<float> instantiatePositionCheckList;
         private List<Vector3> _obstacleList;
 
         private int _obstacleSpawnAmount;

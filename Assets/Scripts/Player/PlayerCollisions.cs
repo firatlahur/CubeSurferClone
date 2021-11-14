@@ -10,9 +10,11 @@ namespace Player
     {
         private GameManager _gameManager;
         
-        public GameObject platformContainer;
+        public GameObject platformContainer, platformMovement;
 
         private const int ObstacleLayer = 8;
+        private const int FinishLayer = 9;
+        private const int StairsLayer = 10;
         private const int CollectableCubeLayer = 11;
         private const int PlayerLayer = 12;
         private const int PurpleScoreLayer = 13;
@@ -26,12 +28,17 @@ namespace Player
         private GameObject _veryFirstCollectedCube;
         private bool _isCollided;
 
+        private int _collectedCubesChildCount;
+        [HideInInspector] public int stairCount;
+        [HideInInspector] public int purpleScoreCount;
+
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
             _veryFirstCollectedCube = transform.GetChild(0).gameObject;
             _collectedCubes = new List<GameObject> { _veryFirstCollectedCube };
             _obstacleDict = new Dictionary<GameObject, float>();
+            _collectedCubesChildCount = 1;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -43,6 +50,15 @@ namespace Player
                     break;
                 case ObstacleLayer:
                     Obstacle(other.gameObject);
+                    break;
+                case StairsLayer:
+                    Stairs(other.gameObject);
+                    break;
+                case FinishLayer:
+                    Finish();
+                    break;
+                case PurpleScoreLayer:
+                    PurpleScore(other.gameObject);
                     break;
             }
         }
@@ -91,15 +107,10 @@ namespace Player
                 
                 _obstacleDict.Add(obstacle,Vector3.Distance(transform.position,obstacle.transform.position));
 
-                if (_obstacleDict.Count < 2)
-                {
-                    return;
-                }
-
                 float nearestObstacleZPosition = _obstacleDict.Values.Min();
                 
                 Vector3 firstCollidedCubePosition = new Vector3();
-                int collectedCubesChildCount = 0;
+                
 
                 foreach (KeyValuePair<GameObject, float> obstacleDictKey in _obstacleDict)
                 {
@@ -107,14 +118,14 @@ namespace Player
                     {
                         GameObject firstCollidedCube = obstacleDictKey.Key.gameObject;
 
-                        collectedCubesChildCount = obstacleDictKey.Key.gameObject.transform.childCount;
+                        _collectedCubesChildCount = obstacleDictKey.Key.gameObject.transform.childCount;
                         firstCollidedCubePosition = firstCollidedCube.transform.position;
                     }
                 }
 
-                for (int i = 0; i < collectedCubesChildCount; i++)
+                for (int i = 0; i < _collectedCubesChildCount; i++)
                 {
-                    if (_collectedCubes.Count < collectedCubesChildCount)
+                    if (transform.childCount <= 1)
                     {
                         _gameManager.isGameStarted = false;
                         Debug.Log("game over");
@@ -138,8 +149,7 @@ namespace Player
                         transform.position -= new Vector3(0f, PlayerYOffset, 0f);
                     }
                 }
-
-                _obstacleDict.Clear();
+                
                 StartCoroutine(nameof(ObstacleCollisionPause));
             }
         }
@@ -148,8 +158,63 @@ namespace Player
         private IEnumerator ObstacleCollisionPause()
         {
             _isCollided = true;
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(.5f);
+            _obstacleDict.Clear();
             _isCollided = false;
+        }
+
+        private void Stairs(GameObject stair)
+        {
+            foreach (KeyValuePair<GameObject, float> obstacleDictKey in _obstacleDict)
+            {
+                _collectedCubesChildCount = obstacleDictKey.Key.gameObject.transform.childCount;
+            }
+            
+            
+            for (int i = 0; i < 1; i++)
+            {
+                stair.GetComponent<BoxCollider>().enabled = false;
+                stairCount++;
+                
+                if (transform.childCount <= 1)
+                {
+                    _gameManager.isGameStarted = false;
+                    Debug.Log("game ENDED");
+                    Debug.Log("place game ENDED materials");
+                }
+
+                Transform collectedCubesTransform = _collectedCubes[_collectedCubes.Count - 1].transform;
+                
+                collectedCubesTransform.transform.parent = null; 
+                collectedCubesTransform.SetParent(stair.transform);
+
+                collectedCubesTransform.position = new Vector3(
+                    transform.position.x,
+                    stair.transform.position.y,
+                    transform.position.z -.2f);
+
+                _collectedCubes.RemoveAt(_collectedCubes.Count - 1);
+            }
+        }
+
+        private void Finish()
+        {
+            Debug.Log("GAME ENDED X20");
+            StartCoroutine(nameof(FinishPostpone));
+        }
+
+        private IEnumerator FinishPostpone()
+        {
+            yield return new WaitForSecondsRealtime(.2f);
+            _gameManager.isGameStarted = false;
+            Debug.Log("current cubes: " + transform.childCount);
+            Debug.Log("purples collected:" + purpleScoreCount);
+        }
+
+        private void PurpleScore(GameObject purpleScore)
+        {
+            purpleScoreCount++;
+            purpleScore.gameObject.SetActive(false);
         }
     }
 }
