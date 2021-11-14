@@ -58,6 +58,8 @@ namespace UI
             goldText.SetActive(true);
             goldAmountText.gameObject.SetActive(true);
             skinsButton.SetActive(true);
+            backButton.SetActive(false);
+
 
             if (skinTypeListImage.activeInHierarchy)
             {
@@ -75,13 +77,15 @@ namespace UI
             TurnOffStartingScreenItems();
             skinsButton.SetActive(false);
             skinTypeListImage.SetActive(true);
-            
+            backButton.SetActive(true);
         }
 
         public void ObstacleSkins()
         {
             skinTypeListImage.SetActive(false);
             obstacleSkins.SetActive(true);
+            goldText.SetActive(true);
+            goldAmountText.gameObject.SetActive(true);
         }
     }
 }

@@ -13,14 +13,19 @@ namespace UI
     {
         private GameManager _gameManager;
         public TextMeshProUGUI errorText;
-        
 
-        [Header("Red Skin")]
+        [Header("Red Obstacle Skin")]
         public Button redSkinPurchaseButton;
         public Button redSkinUseButton;
         public TextMeshProUGUI redSkinPurchaseButtonText;
         public TextMeshProUGUI redSkinUseButtonText;
-
+        
+        [Header("Green Obstacle Skin")]
+        public Button greenSkinPurchaseButton;
+        public Button greenSkinUseButton;
+        public TextMeshProUGUI greenSkinPurchaseButtonText;
+        public TextMeshProUGUI greenSkinUseButtonText;
+        
         public void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
@@ -45,6 +50,18 @@ namespace UI
                 redSkinUseButtonText.text = "In Use";
                 redSkinUseButton.interactable = false;
             }
+            
+            if (_gameManager.isPurchasedGreenObstacleSkin)
+            {
+                greenSkinPurchaseButton.interactable = false;
+                greenSkinPurchaseButtonText.text = "Owned";
+            }
+
+            if (_gameManager.obstacleSkin.name == "GreenSkin")
+            {
+                greenSkinUseButtonText.text = "In Use";
+                greenSkinUseButton.interactable = false;
+            }
         }
 
         public void PurchaseRedSkin()
@@ -64,6 +81,23 @@ namespace UI
             }
         }
 
+        public void PurchaseGreenSkin()
+        {
+            if (_gameManager.totalGold >= 250 && !_gameManager.isPurchasedGreenObstacleSkin)
+            {
+                _gameManager.obstacleSkin = Resources.Load("Obstacle/GreenSkin") as ObstacleSkin;
+                _gameManager.totalGold -= 250;
+                greenSkinPurchaseButton.interactable = false;
+                greenSkinPurchaseButtonText.text = "Owned";
+                _gameManager.isPurchasedGreenObstacleSkin = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("Not enough gold."));
+            }
+        }
+
         public void UseRedSkin()
         {
             if (_gameManager.isPurchasedRedObstacleSkin && _gameManager.obstacleSkin.name != "RedSkin")
@@ -72,6 +106,25 @@ namespace UI
                 redSkinUseButtonText.text = "In Use";
                 redSkinUseButton.interactable = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("You do not own this."));
+            }
+        }
+        
+        public void UseGreenSkin()
+        {
+            if (_gameManager.isPurchasedGreenObstacleSkin && _gameManager.obstacleSkin.name != "GreenSkin")
+            {
+                _gameManager.obstacleSkin = Resources.Load("Obstacle/GreenSkin") as ObstacleSkin;
+                greenSkinUseButtonText.text = "In Use";
+                greenSkinUseButton.interactable = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                StartCoroutine(Error("You do not own this."));
             }
         }
 

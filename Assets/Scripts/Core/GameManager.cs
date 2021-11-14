@@ -13,6 +13,7 @@ namespace Core
     {
         [HideInInspector]public bool isGameStarted;
         public bool isPurchasedRedObstacleSkin;
+        public bool isPurchasedGreenObstacleSkin;
         
         public int currentLevel, totalGold;
         public ObstacleSkin obstacleSkin;
