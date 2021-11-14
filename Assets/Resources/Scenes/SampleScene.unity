@@ -268,6 +268,31 @@ MonoBehaviour:
   platformContainer: {fileID: 1409123814}
   pinkScorePrefab: {fileID: 5515660962413517488, guid: 9233ef9283c663a45a8e585591f4c002,
     type: 3}
+--- !u!1 &726212737 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2022838774768794786, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2022838774433744783}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &726212745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726212737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8b1c546f3eec54f95f0b5c4e7f0c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  veryFirstCollectedCube: {fileID: 1039017197}
+--- !u!1 &1039017197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2022838774102026556, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2022838774433744783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1409123814
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGameStarted: 1
   currentLevel: 1
-  totalPurpleScore: 0
+  totalGold: 0
   obstacleSkin: {fileID: 11400000, guid: ca90337115267094da22b2936cbe8c26, type: 2}
   collectableCubeSkin: {fileID: 11400000, guid: ac167b03f58c77049b58b47471f555a1,
     type: 2}

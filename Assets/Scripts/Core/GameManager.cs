@@ -10,7 +10,7 @@ namespace Core
     {
         public bool isGameStarted;
         
-        public int currentLevel, totalPurpleScore;
+        public int currentLevel, totalGold;
         public ObstacleSkin obstacleSkin;
         public CollectableCubeSkin collectableCubeSkin;
         

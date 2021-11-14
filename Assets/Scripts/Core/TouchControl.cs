@@ -1,8 +1,6 @@
-﻿using System;
-using Core;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Player
+namespace Core
 {
     public class TouchControl : MonoBehaviour
     {

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GreenSkin
   m_EditorClassIdentifier: 
   obstacleSkinList:
-  - {fileID: 887581002403983739, guid: cd1794a6d1048b442844bb29ccfe4bcd, type: 3}
-  - {fileID: 887581002403983739, guid: 4d4fb7f95e465b24c9377bf85493a739, type: 3}
-  - {fileID: 887581002403983739, guid: 7f45f0b82db368445a81ed0bccf230ab, type: 3}
-  - {fileID: 887581002403983739, guid: 22d53b5621a86ca4292d72fd528d277d, type: 3}
-  - {fileID: 887581002403983739, guid: 1bc19b41bc436d24aaf54ceba2326bb9, type: 3}
+  - {fileID: 887581002403983739, guid: 4dd4a2c276e25d44cb0f3790e67b48f4, type: 3}
+  - {fileID: 887581002403983739, guid: 62cf13bce0762de498f88f7130308c09, type: 3}
+  - {fileID: 887581002403983739, guid: 597f478bd3edbfd4484f5a9bde076c88, type: 3}
+  - {fileID: 887581002403983739, guid: 32087f22ea3e1714baaa8777b0783a5a, type: 3}
+  - {fileID: 887581002403983739, guid: 360d98097032a06469594c83d11b801a, type: 3}
