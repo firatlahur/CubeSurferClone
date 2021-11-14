@@ -24,6 +24,11 @@ namespace UI
         public void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
+        }
+        
+        private IEnumerator Start()
+        {
+            yield return new WaitForEndOfFrame();
             SkinCheck();
         }
 

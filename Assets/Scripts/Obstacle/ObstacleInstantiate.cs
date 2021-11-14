@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Core;
 using ScriptableObjects.Obstacle;
 using UnityEngine;
@@ -30,8 +31,9 @@ namespace Obstacle
             _obstacleSpawnAmount = _gameManager.currentLevel * 2 * 10;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
+            yield return new WaitForEndOfFrame();
             _obstacle = _gameManager.obstacleSkin;
             InstantiateObstacles();
         }

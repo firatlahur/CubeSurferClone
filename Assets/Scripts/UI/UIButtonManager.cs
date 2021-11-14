@@ -1,4 +1,6 @@
-﻿using Core;
+﻿using System;
+using System.Collections;
+using Core;
 using TMPro;
 using UnityEngine;
 
@@ -24,6 +26,11 @@ namespace UI
         public void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
+        }
+
+        private IEnumerator Start()
+        {
+            yield return new WaitForEndOfFrame();
             goldAmountText.text = _gameManager.totalGold.ToString();
         }
 
