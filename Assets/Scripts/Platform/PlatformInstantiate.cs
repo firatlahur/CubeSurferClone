@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Core;
+﻿using Core;
 using UI;
 using UnityEngine;
 
@@ -17,9 +15,12 @@ namespace Platform
         private float _platformPositionModifier;
         [HideInInspector] public Transform finishLineTransform;
 
-        private const int DefaultLayer = 0;
-        private const int FinishLayer = 9;
-        private const int StairLayer = 10;
+        private enum Layers
+        {
+            Default = 0,
+            Finish = 9,
+            Stairs = 10
+        };
 
         private void Awake()
         {
@@ -40,9 +41,8 @@ namespace Platform
 
             platform.transform.localScale = new Vector3(.5f, 1f, _platformScaleModifier);
             platform.transform.position = new Vector3(0f, 0f, _platformPositionModifier);
-            platform.name = "Platform";
             platform.transform.SetParent(platformContainer.transform);
-            platform.gameObject.layer = DefaultLayer;
+            platform.gameObject.layer = (int) Layers.Default;
             
             finishLineTransform = platform.transform.GetChild(0);
 
@@ -55,19 +55,21 @@ namespace Platform
             
             GameObject finishPlatform = Instantiate(finishPlatformPrefab, spawnPos, Quaternion.identity);
             finishPlatform.transform.SetParent(platformContainer.transform);
-            finishPlatform.gameObject.layer = DefaultLayer;
+            finishPlatform.gameObject.layer = (int) Layers.Default;
 
+            
             GameObject stair = Instantiate(stairPrefab, finishPlatform.transform.position + new Vector3(0f, .25f, 0f),
                 Quaternion.identity);
             stair.transform.SetParent(platformContainer.transform);
-            stair.layer = StairLayer;
+            stair.layer = (int) Layers.Stairs;
 
+            
             GameObject finishBonusScore = Instantiate(finishBonusScorePrefab,
                 stair.transform.position + new Vector3(-2.5f, 9.25f, 79f), Quaternion.identity);
             finishBonusScore.transform.SetParent(platformContainer.transform);
-            finishBonusScore.layer = FinishLayer;
+            finishBonusScore.layer = (int) Layers.Finish;
             
-            inGameUI.platform = finishBonusScore;
+            inGameUI.platform = finishBonusScore; // to calculate level progress bar
         }
     }
 }

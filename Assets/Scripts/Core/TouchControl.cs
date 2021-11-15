@@ -8,14 +8,15 @@ namespace Core
 
         private Vector3 _movementDirection;
 
-        private float _movementSpeed, _platformOffset;
+        private float _movementSpeed;
+
+        private const float PlatformOffset = 2.5f;
 
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
             _movementSpeed = 2f;
             _movementDirection = new Vector3();
-            _platformOffset = 2.25f;
         }
 
         private void Update()
@@ -27,8 +28,11 @@ namespace Core
                     _movementDirection = new Vector3(Input.GetTouch(0).deltaPosition.x, 0f, 0f);
                     transform.Translate(_movementDirection * _movementSpeed * Time.deltaTime);
 
-                    float xOffset = Mathf.Clamp(transform.position.x, -_platformOffset, _platformOffset);
-                    transform.position = new Vector3(xOffset, transform.position.y, 0f);
+                    Vector3 player = transform.position;
+                    
+                    float xOffset = Mathf.Clamp(player.x, -PlatformOffset, PlatformOffset);
+                    player = new Vector3(xOffset, player.y, 0f);
+                    transform.position = player;
                 }
             }
         }

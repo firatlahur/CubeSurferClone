@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Core;
-using Platform;
-using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +16,14 @@ namespace UI
         private float _fullDistance;
 
         public TextMeshProUGUI currentLevel;
-        public GameObject levelProgress;
+        [SerializeField] private GameObject levelProgress;
         public Image levelProgressFill;
+        
+        [Header("Game Over Panel")]
+        [SerializeField] private TextMeshProUGUI collectedGold;
+        [SerializeField] private TextMeshProUGUI stairsCount;
+        [SerializeField] private TextMeshProUGUI purpleScoreCount;
+        [SerializeField] private TextMeshProUGUI collectedCubesCount;
 
         private void Awake()
         {
@@ -32,13 +35,12 @@ namespace UI
             yield return new WaitForEndOfFrame();
             _fullDistance = GetPathDistance();
         }
-
-        private void Update()
+        
+        public void InitiateInGameUI()
         {
-            if (_gameManager.isGameStarted)
-            {
-                CalculateDistance();
-            }
+            currentLevel.text = "Level " + _gameManager.currentLevel;
+            currentLevel.gameObject.SetActive(true);
+            levelProgress.SetActive(true);
         }
 
         private float GetPathDistance()
@@ -52,12 +54,25 @@ namespace UI
             float progressValue = Mathf.InverseLerp(_fullDistance, 0f, newDistance - _gameManager.currentLevel * 10f);
             levelProgressFill.fillAmount = progressValue;
         }
-
-        public void InitiateInGameUI()
+        
+        private void Update()
         {
-            currentLevel.text = "Level " + _gameManager.currentLevel;
-            currentLevel.gameObject.SetActive(true);
-            levelProgress.SetActive(true);
+            if (_gameManager.isGameStarted)
+            {
+                CalculateDistance();
+            }
+        }
+        
+        public void SetEndGameResults(int stairCount, int purpleCount, int collectedCubeCount)
+        {
+            int grandTotal = (stairCount + purpleCount + collectedCubeCount) * 2;
+            stairsCount.text = stairCount.ToString();
+            purpleScoreCount.text = purpleCount.ToString();
+            collectedCubesCount.text = collectedCubeCount.ToString();
+
+            collectedGold.text = "Gold: " + "+" + grandTotal;
+
+            _gameManager.totalGold += grandTotal;
         }
     }
 }

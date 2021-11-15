@@ -13,15 +13,18 @@ namespace Player
         
         public GameObject platformContainer, obstacleGameOver, stairsGameOver;
 
-        public UIButtonManager uiButtonManager;
+        public InGameUIManager inGameUIManager;
 
-        private const int ObstacleLayer = 8;
-        private const int FinishLayer = 9;
-        private const int StairsLayer = 10;
-        private const int CollectableCubeLayer = 11;
-        private const int PlayerLayer = 12;
-        private const int PurpleScoreLayer = 13;
-        
+        private enum Layers
+        {
+            Obstacle = 8,
+            Finish = 9,
+            Stairs = 10,
+            CollectableCube = 11,
+            Player = 12,
+            PurpleScore = 13
+        };
+
         private const float CollectableCubeYOffset = .25f;
         private const float PlayerYOffset = .5f;
 
@@ -48,19 +51,19 @@ namespace Player
         {
             switch (other.gameObject.layer)
             {
-                case CollectableCubeLayer:
+                case (int) Layers.CollectableCube:
                     CollectableCube(other.gameObject);
                     break;
-                case ObstacleLayer:
+                case (int) Layers.Obstacle:
                     Obstacle(other.gameObject);
                     break;
-                case StairsLayer:
+                case (int) Layers.Stairs:
                     Stairs(other.gameObject);
                     break;
-                case FinishLayer:
+                case (int) Layers.Finish:
                     Finish();
                     break;
-                case PurpleScoreLayer:
+                case (int) Layers.PurpleScore:
                     PurpleScore(other.gameObject);
                     break;
             }
@@ -81,7 +84,7 @@ namespace Player
                 collectableCube.transform.parent = null;
             }
             
-            collectableCube.gameObject.layer = PlayerLayer;
+            collectableCube.gameObject.layer = (int) Layers.Player;
 
             Vector3 lastCubePos = new Vector3(
                 _collectedCubes.Last().transform.position.x,
@@ -130,8 +133,9 @@ namespace Player
                     {
                         _gameManager.isGameStarted = false;
                         obstacleGameOver.SetActive(true);
-                        Debug.Log("game over");
-                        Debug.Log("place game over materials");
+                        transform.DetachChildren();
+                        transform.GetComponent<Rigidbody>().useGravity = true;
+                        transform.GetComponent<Rigidbody>().AddForce(0f,5f,-25f);
                     }
                     else
                     {
@@ -166,23 +170,16 @@ namespace Player
 
         private void Stairs(GameObject stair)
         {
-            foreach (KeyValuePair<GameObject, float> obstacleDictKey in _obstacleDict)
-            {
-                _collectedCubesChildCount = obstacleDictKey.Key.gameObject.transform.childCount;
-            }
-            
-            
             for (int i = 0; i < 1; i++)
             {
                 stair.GetComponent<BoxCollider>().enabled = false;
                 stairCount++;
-                
-                if (transform.childCount <= 1)
+                Transform player = transform;
+
+                if (player.childCount <= 1)
                 {
                     _gameManager.isGameStarted = false;
                     Finish();
-                    Debug.Log("game ENDED");
-                    Debug.Log("place game ENDED materials");
                 }
 
                 Transform collectedCubesTransform = _collectedCubes[_collectedCubes.Count - 1].transform;
@@ -190,10 +187,12 @@ namespace Player
                 collectedCubesTransform.transform.parent = null; 
                 collectedCubesTransform.SetParent(stair.transform);
 
+                Vector3 playerPosition = player.position;
+                
                 collectedCubesTransform.position = new Vector3(
-                    transform.position.x,
+                    playerPosition.x,
                     stair.transform.position.y,
-                    transform.position.z -.2f);
+                    playerPosition.z -.2f);
 
                 _collectedCubes.RemoveAt(_collectedCubes.Count - 1);
             }
@@ -201,7 +200,7 @@ namespace Player
 
         private void Finish()
         {
-            uiButtonManager.SetEndGameResults(stairCount, purpleScoreCount, transform.childCount);
+            inGameUIManager.SetEndGameResults(stairCount, purpleScoreCount, transform.childCount);
             StartCoroutine(nameof(FinishPostpone));
         }
 

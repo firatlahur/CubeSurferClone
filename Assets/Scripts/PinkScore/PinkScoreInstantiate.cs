@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Core;
 using Platform;
 using UnityEngine;
@@ -18,6 +17,8 @@ namespace PinkScore
         private Vector3 _startPos;
         private float _finishLinePosition, _zOffset;
         private int _pinkScoreSpawnAmount;
+
+        private const float PlatformOffset = 2.25f;
 
         private void Awake()
         {
@@ -49,7 +50,7 @@ namespace PinkScore
 
         private Vector3 CalculatePinkScorePosition(int i)
         {
-            _startPos.x = Random.Range(-2.25f, 2.25f);
+            _startPos.x = Random.Range(-PlatformOffset, PlatformOffset);
             _startPos.z = Random.Range(_zOffset, _finishLinePosition);
             return _startPos;
         }

@@ -8917,7 +8917,7 @@ MonoBehaviour:
   isPurchasedBlueCollectableCubeSkin: 0
   isPurchasedOrangeCollectableCubeSkin: 0
   currentLevel: 1
-  totalGold: 500
+  totalGold: 0
   obstacleSkin: {fileID: 11400000, guid: aba677f57eab1c049bac2efd6fda5063, type: 2}
   collectableCubeSkin: {fileID: 11400000, guid: ac167b03f58c77049b58b47471f555a1,
     type: 2}
@@ -9112,14 +9112,6 @@ MonoBehaviour:
   skinTypeListImage: {fileID: 218648275}
   obstacleSkins: {fileID: 633077432}
   collectableCubeSkins: {fileID: 1468115670}
-  obstacleGameOver: {fileID: 121266090}
-  retryButton: {fileID: 1786545236}
-  skipLevelButton: {fileID: 186627421}
-  stairsGameOver: {fileID: 2016545385}
-  collectedGold: {fileID: 1079981601}
-  stairsCount: {fileID: 2143915528}
-  purpleScoreCount: {fileID: 1240105884}
-  collectedCubesCount: {fileID: 1441151656}
 --- !u!4 &1998138758
 Transform:
   m_ObjectHideFlags: 0
@@ -9180,6 +9172,10 @@ MonoBehaviour:
   currentLevel: {fileID: 1985629630}
   levelProgress: {fileID: 1772367927}
   levelProgressFill: {fileID: 2008043109}
+  collectedGold: {fileID: 1079981601}
+  stairsCount: {fileID: 2143915528}
+  purpleScoreCount: {fileID: 1240105884}
+  collectedCubesCount: {fileID: 1441151656}
 --- !u!1 &2008043107
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,6 +9912,11 @@ PrefabInstance:
       objectReference: {fileID: 2016545385}
     - target: {fileID: 2022838774768794811, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
         type: 3}
+      propertyPath: inGameUIManager
+      value: 
+      objectReference: {fileID: 1998138760}
+    - target: {fileID: 2022838774768794811, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+        type: 3}
       propertyPath: uiButtonManager
       value: 
       objectReference: {fileID: 1998138757}
@@ -9944,6 +9945,11 @@ PrefabInstance:
       propertyPath: collisionGameOverUI
       value: 
       objectReference: {fileID: 121266090}
+    - target: {fileID: 2022838774768794812, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 2022838774768794814, guid: 9a09a75cbbd8e6e4aa144d239e44915a,
         type: 3}
       propertyPath: m_RootOrder

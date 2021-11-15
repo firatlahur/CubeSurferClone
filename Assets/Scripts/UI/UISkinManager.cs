@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Core;
 using ScriptableObjects.CollectableCube;
 using ScriptableObjects.Obstacle;
@@ -52,16 +51,34 @@ namespace UI
 
         private void SkinCheck()
         {
+            switch (_gameManager.obstacleSkin.name)
+            {
+                case "RedSkin":
+                    redSkinUseButtonText.text = "In Use";
+                    redSkinUseButton.interactable = false;
+                    break;
+                case "GreenSkin":
+                    greenSkinUseButtonText.text = "In Use";
+                    greenSkinUseButton.interactable = false;
+                    break;
+            }
+
+            switch (_gameManager.collectableCubeSkin.name)
+            {
+                case "BlueSkin":
+                    blueSkinUseButtonText.text = "In Use";
+                    blueSkinUseButton.interactable = false;
+                    break;
+                case "OrangeSkin":
+                    orangeSkinUseButtonText.text = "In Use";
+                    orangeSkinUseButton.interactable = false;
+                    break;
+            }
+            
             if (_gameManager.isPurchasedRedObstacleSkin)
             {
                 redSkinPurchaseButton.interactable = false;
                 redSkinPurchaseButtonText.text = "Owned";
-            }
-
-            if (_gameManager.obstacleSkin.name == "RedSkin")
-            {
-                redSkinUseButtonText.text = "In Use";
-                redSkinUseButton.interactable = false;
             }
             
             if (_gameManager.isPurchasedGreenObstacleSkin)
@@ -69,35 +86,17 @@ namespace UI
                 greenSkinPurchaseButton.interactable = false;
                 greenSkinPurchaseButtonText.text = "Owned";
             }
-
-            if (_gameManager.obstacleSkin.name == "GreenSkin")
-            {
-                greenSkinUseButtonText.text = "In Use";
-                greenSkinUseButton.interactable = false;
-            }
             
             if (_gameManager.isPurchasedBlueCollectableCubeSkin)
             {
                 blueSkinPurchaseButton.interactable = false;
                 blueSkinPurchaseButtonText.text = "Owned";
             }
-
-            if (_gameManager.collectableCubeSkin.name == "BlueSkin")
-            {
-                blueSkinUseButtonText.text = "In Use";
-                blueSkinUseButton.interactable = false;
-            }
             
             if (_gameManager.isPurchasedOrangeCollectableCubeSkin)
             {
                 orangeSkinPurchaseButton.interactable = false;
                 orangeSkinPurchaseButtonText.text = "Owned";
-            }
-
-            if (_gameManager.collectableCubeSkin.name == "OrangeSkin")
-            {
-                orangeSkinUseButtonText.text = "In Use";
-                orangeSkinUseButton.interactable = false;
             }
         }
 

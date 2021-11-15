@@ -16,7 +16,6 @@ namespace Obstacle
         private Vector3 _startPos;
         
         [HideInInspector]public List<float> instantiatePositionCheckList;
-        private List<Vector3> _obstacleList;
 
         private int _obstacleSpawnAmount;
         
@@ -25,7 +24,6 @@ namespace Obstacle
             _gameManager = FindObjectOfType<GameManager>();
 
             _startPos = new Vector3(-2.25f, .25f, 20f);
-            _obstacleList = new List<Vector3>();
             instantiatePositionCheckList = new List<float>();
 
             _obstacleSpawnAmount = _gameManager.currentLevel * 2 * 10;
@@ -45,8 +43,6 @@ namespace Obstacle
                 GameObject obstacle = Instantiate(_obstacle.obstacleSkinList[Random.Range(0, _obstacle.obstacleSkinList.Count)],
                     _startPos, Quaternion.identity);
                 
-                _obstacleList.Add(obstacle.transform.position);
-
                 if (i > 0)
                 {
                     obstacle.transform.position = CalculateObstaclePosition(i);
@@ -60,6 +56,7 @@ namespace Obstacle
         {
             const float xOffset = .5f;
             const float zOffset = 20f;
+            const float xStartPoint = -2.25f;
             
             _startPos.x += xOffset;
 
@@ -72,7 +69,7 @@ namespace Obstacle
             {
                 case 0:
                     _startPos.z += zOffset;
-                    _startPos.x = -2.25f;
+                    _startPos.x = xStartPoint;
                     instantiatePositionCheckList.Add(_startPos.z);
                     break;
             }
