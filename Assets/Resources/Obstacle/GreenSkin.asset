@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf97fe85cfdb6e47b0184fa08ae08a9, type: 3}
+  m_Name: GreenSkin
+  m_EditorClassIdentifier: 
+  obstacleSkinList:
+  - {fileID: 887581002403983739, guid: 4dd4a2c276e25d44cb0f3790e67b48f4, type: 3}
+  - {fileID: 887581002403983739, guid: 62cf13bce0762de498f88f7130308c09, type: 3}
+  - {fileID: 887581002403983739, guid: 597f478bd3edbfd4484f5a9bde076c88, type: 3}
+  - {fileID: 887581002403983739, guid: 32087f22ea3e1714baaa8777b0783a5a, type: 3}
+  - {fileID: 887581002403983739, guid: 360d98097032a06469594c83d11b801a, type: 3}

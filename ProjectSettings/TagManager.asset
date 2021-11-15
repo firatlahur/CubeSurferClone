@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Obstacle
+  - Finish
+  - Stairs
+  - CollectableCube
+  - Player
+  - PurpleScore
   - 
   - 
   - 
