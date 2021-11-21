@@ -30,11 +30,7 @@ namespace UI
             _gameManager = FindObjectOfType<GameManager>();
         }
 
-        private IEnumerator Start()
-        {
-            yield return new WaitForEndOfFrame();
-            _fullDistance = GetPathDistance();
-        }
+        private void Start() => _fullDistance = GetPathDistance();
         
         public void InitiateInGameUI()
         {

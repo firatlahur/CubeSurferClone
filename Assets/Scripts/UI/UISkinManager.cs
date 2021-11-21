@@ -42,12 +42,8 @@ namespace UI
         {
             _gameManager = FindObjectOfType<GameManager>();
         }
-        
-        private IEnumerator Start()
-        {
-            yield return new WaitForEndOfFrame();
-            SkinCheck();
-        }
+
+        private void Start() => SkinCheck();
 
         private void SkinCheck()
         {

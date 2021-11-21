@@ -20,9 +20,8 @@ namespace Platform
             _movementSpeed = 10f;
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
             platformContainer.transform.SetParent(transform);
             _destination = _platformInstantiate.finishLineTransform.position * -5;
         }

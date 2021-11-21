@@ -34,9 +34,8 @@ namespace UI
             _inGameUIManager = FindObjectOfType<InGameUIManager>();
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
             goldAmountText.text = _gameManager.totalGold.ToString();
             actualGameLevelText.text = _gameManager.currentLevel.ToString();
         }

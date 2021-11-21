@@ -15,9 +15,8 @@ namespace Player
             _gameManager = FindObjectOfType<GameManager>();
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
             veryFirstCollectedCube.GetComponent<Renderer>().material = _gameManager.collectableCubeSkin
                 .collectableCubeSkin[0].GetComponent<Renderer>().sharedMaterial;
         }

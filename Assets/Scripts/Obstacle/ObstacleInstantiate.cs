@@ -29,9 +29,8 @@ namespace Obstacle
             _obstacleSpawnAmount = _gameManager.currentLevel * 2 * 10;
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
             _obstacle = _gameManager.obstacleSkin;
             InstantiateObstacles();
         }

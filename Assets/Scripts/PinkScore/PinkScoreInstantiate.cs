@@ -29,9 +29,8 @@ namespace PinkScore
             _pinkScoreSpawnAmount = _gameManager.currentLevel * 2 * 3;
         }
 
-        private IEnumerator Start() //_finishLinePosition needs to have platform spawned already
+        private void Start() //_finishLinePosition needs to have platform spawned already
         {
-            yield return new WaitForEndOfFrame();
             _finishLinePosition = _finishLine.finishLineTransform.position.z - 10f;
             
             InstantiatePinkScore();
