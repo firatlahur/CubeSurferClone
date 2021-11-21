@@ -9100,18 +9100,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720f468ef29b140448d638c692f8caec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startBackground: {fileID: 1090094740}
-  gameNameText: {fileID: 1742836425}
-  startButton: {fileID: 1115407539}
-  goldText: {fileID: 1482458471}
-  goldAmountText: {fileID: 1230236240}
-  backButton: {fileID: 131220000}
-  actualGameLevelText: {fileID: 1023845418}
-  currentLevelText: {fileID: 1484613141}
-  skinsButton: {fileID: 709484684}
-  skinTypeListImage: {fileID: 218648275}
-  obstacleSkins: {fileID: 633077432}
-  collectableCubeSkins: {fileID: 1468115670}
+  startPanel:
+    startBackground: {fileID: 1090094740}
+    gameNameText: {fileID: 1742836425}
+    startButton: {fileID: 1115407539}
+    goldText: {fileID: 1482458471}
+    goldAmountText: {fileID: 1230236240}
+    backButton: {fileID: 131220000}
+    actualGameLevelText: {fileID: 1023845418}
+    currentLevelText: {fileID: 1484613141}
+  skinPanel:
+    skinsButton: {fileID: 709484684}
+    skinTypeListImage: {fileID: 218648275}
+    obstacleSkins: {fileID: 633077432}
+    collectableCubeSkins: {fileID: 1468115670}
 --- !u!4 &1998138758
 Transform:
   m_ObjectHideFlags: 0
@@ -9139,22 +9141,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   errorText: {fileID: 1429412383}
-  redSkinPurchaseButton: {fileID: 1138051075}
-  redSkinUseButton: {fileID: 1403171417}
-  redSkinPurchaseButtonText: {fileID: 1271775546}
-  redSkinUseButtonText: {fileID: 1348183555}
-  greenSkinPurchaseButton: {fileID: 1936794545}
-  greenSkinUseButton: {fileID: 1106396799}
-  greenSkinPurchaseButtonText: {fileID: 1075414330}
-  greenSkinUseButtonText: {fileID: 241396265}
-  blueSkinPurchaseButton: {fileID: 791451208}
-  blueSkinUseButton: {fileID: 1928404546}
-  blueSkinPurchaseButtonText: {fileID: 381348245}
-  blueSkinUseButtonText: {fileID: 2113339522}
-  orangeSkinPurchaseButton: {fileID: 1509356311}
-  orangeSkinUseButton: {fileID: 1745764831}
-  orangeSkinPurchaseButtonText: {fileID: 798040214}
-  orangeSkinUseButtonText: {fileID: 1264363209}
+  redObstacleSkin:
+    redSkinPurchaseButton: {fileID: 1138051075}
+    redSkinUseButton: {fileID: 1403171417}
+    redSkinPurchaseButtonText: {fileID: 1271775546}
+    redSkinUseButtonText: {fileID: 1348183555}
+  greenObstacleSkin:
+    greenSkinPurchaseButton: {fileID: 1936794545}
+    greenSkinUseButton: {fileID: 1106396799}
+    greenSkinPurchaseButtonText: {fileID: 1075414330}
+    greenSkinUseButtonText: {fileID: 241396265}
+  blueCollectableSkin:
+    blueSkinPurchaseButton: {fileID: 791451208}
+    blueSkinUseButton: {fileID: 1928404546}
+    blueSkinPurchaseButtonText: {fileID: 381348245}
+    blueSkinUseButtonText: {fileID: 2113339522}
+  orangeCollectableSkin:
+    orangeSkinPurchaseButton: {fileID: 1509356311}
+    orangeSkinUseButton: {fileID: 1745764831}
+    orangeSkinPurchaseButtonText: {fileID: 798040214}
+    orangeSkinUseButtonText: {fileID: 1264363209}
 --- !u!114 &1998138760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9172,10 +9178,11 @@ MonoBehaviour:
   currentLevel: {fileID: 1985629630}
   levelProgress: {fileID: 1772367927}
   levelProgressFill: {fileID: 2008043109}
-  collectedGold: {fileID: 1079981601}
-  stairsCount: {fileID: 2143915528}
-  purpleScoreCount: {fileID: 1240105884}
-  collectedCubesCount: {fileID: 1441151656}
+  gameOverPanel:
+    collectedGold: {fileID: 1079981601}
+    stairsCount: {fileID: 2143915528}
+    purpleScoreCount: {fileID: 1240105884}
+    collectedCubesCount: {fileID: 1441151656}
 --- !u!1 &2008043107
 GameObject:
   m_ObjectHideFlags: 0

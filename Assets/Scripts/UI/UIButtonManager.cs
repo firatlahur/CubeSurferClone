@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Core;
 using TMPro;
 using UnityEngine;
@@ -12,41 +13,53 @@ namespace UI
         private GameManager _gameManager;
         private InGameUIManager _inGameUIManager;
 
-        [Header("Start Panel")]
-        [SerializeField] private GameObject startBackground;
-        [SerializeField] private GameObject gameNameText;
-        [SerializeField] private GameObject startButton;
-        [SerializeField] private GameObject goldText;
-        [SerializeField] private TextMeshProUGUI goldAmountText;
-        [SerializeField] private GameObject backButton;
-        [SerializeField] private TextMeshProUGUI actualGameLevelText;
-        [SerializeField] private TextMeshProUGUI currentLevelText;
+        #region StartPanel
+        [Serializable]
+        public struct StartPanel
+        {
+            [SerializeField] internal GameObject startBackground;
+            [SerializeField] internal GameObject gameNameText;
+            [SerializeField] internal GameObject startButton;
+            [SerializeField] internal GameObject goldText;
+            [SerializeField] internal TextMeshProUGUI goldAmountText;
+            [SerializeField] internal GameObject backButton;
+            [SerializeField] internal TextMeshProUGUI actualGameLevelText;
+            [SerializeField] internal TextMeshProUGUI currentLevelText;
+        }
+        #endregion
 
-        [Header("Skin Panel")]
-        [SerializeField] private GameObject skinsButton;
-        [SerializeField] private GameObject skinTypeListImage;
-        [SerializeField] private GameObject obstacleSkins;
-        [SerializeField] private GameObject collectableCubeSkins;
+        #region SkinPanel
+        [Serializable]
+        public struct SkinPanel
+        {
+            [SerializeField] internal GameObject skinsButton;
+            [SerializeField] internal GameObject skinTypeListImage;
+            [SerializeField] internal GameObject obstacleSkins;
+            [SerializeField] internal GameObject collectableCubeSkins;
+        }
+        #endregion
 
+        public StartPanel startPanel;
+        public SkinPanel skinPanel;
+        
         public void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
             _inGameUIManager = FindObjectOfType<InGameUIManager>();
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
-            goldAmountText.text = _gameManager.totalGold.ToString();
-            actualGameLevelText.text = _gameManager.currentLevel.ToString();
+           startPanel.goldAmountText.text = _gameManager.totalGold.ToString();
+           startPanel.actualGameLevelText.text = _gameManager.currentLevel.ToString();
         }
 
         public void StartGame()
         {
             _gameManager.isGameStarted = true;
             
-            startBackground.SetActive(false);
-            backButton.SetActive(false);
+            startPanel.startBackground.SetActive(false);
+            startPanel.backButton.SetActive(false);
             TurnOffStartingScreenItems();
             
             _inGameUIManager.InitiateInGameUI();
@@ -54,56 +67,57 @@ namespace UI
 
         private void TurnOffStartingScreenItems()
         {
-            gameNameText.SetActive(false);
-            startButton.SetActive(false);
-            goldText.SetActive(false);
-            goldAmountText.gameObject.SetActive(false);
-            skinsButton.SetActive(false);
-            currentLevelText.gameObject.SetActive(false);
-            actualGameLevelText.gameObject.SetActive(false);
+            startPanel.gameNameText.SetActive(false);
+            startPanel.startButton.SetActive(false);
+            startPanel.goldText.SetActive(false);
+            startPanel.goldAmountText.gameObject.SetActive(false);
+            startPanel.currentLevelText.gameObject.SetActive(false);
+            startPanel.actualGameLevelText.gameObject.SetActive(false);
+            
+            skinPanel.skinsButton.SetActive(false);
         }
 
         public void Back()
         {
-            gameNameText.SetActive(true);
-            startButton.SetActive(true);
-            goldText.SetActive(true);
-            goldAmountText.gameObject.SetActive(true);
-            skinsButton.SetActive(true);
-            currentLevelText.gameObject.SetActive(true);
-            actualGameLevelText.gameObject.SetActive(true);
-            
-            collectableCubeSkins.SetActive(false);
-            backButton.SetActive(false);
-            skinTypeListImage.SetActive(false);
-            obstacleSkins.SetActive(false);
+            startPanel.gameNameText.SetActive(true);
+            startPanel.startButton.SetActive(true);
+            startPanel.goldText.SetActive(true);
+            startPanel.goldAmountText.gameObject.SetActive(true);
+            startPanel.currentLevelText.gameObject.SetActive(true);
+            startPanel.actualGameLevelText.gameObject.SetActive(true);
+            startPanel.backButton.SetActive(false);
+
+            skinPanel.collectableCubeSkins.SetActive(false);
+            skinPanel.skinTypeListImage.SetActive(false);
+            skinPanel.obstacleSkins.SetActive(false);
+            skinPanel.skinsButton.SetActive(true);
         }
 
         public void Skins()
         {
             TurnOffStartingScreenItems();
-            skinsButton.SetActive(false);
+            skinPanel.skinsButton.SetActive(false);
+            skinPanel.skinTypeListImage.SetActive(true);
             
-            skinTypeListImage.SetActive(true);
-            backButton.SetActive(true);
+            startPanel.backButton.SetActive(true);
         }
 
         public void ObstacleSkins()
         {
-            skinTypeListImage.SetActive(false);
+            skinPanel.skinTypeListImage.SetActive(false);
+            skinPanel.obstacleSkins.SetActive(true);
             
-            obstacleSkins.SetActive(true);
-            goldText.SetActive(true);
-            goldAmountText.gameObject.SetActive(true);
+            startPanel.goldText.SetActive(true);
+            startPanel.goldAmountText.gameObject.SetActive(true);
         }
         
         public void CollectableCubeSkins()
         {
-            skinTypeListImage.SetActive(false);
+            skinPanel.skinTypeListImage.SetActive(false);
+            skinPanel.collectableCubeSkins.SetActive(true);
             
-            collectableCubeSkins.SetActive(true);
-            goldText.SetActive(true);
-            goldAmountText.gameObject.SetActive(true);
+            startPanel.goldText.SetActive(true);
+            startPanel.goldAmountText.gameObject.SetActive(true);
         }
 
         public void Retry()
