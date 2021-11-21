@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Core;
 using TMPro;
 using UnityEngine;
@@ -18,13 +19,19 @@ namespace UI
         public TextMeshProUGUI currentLevel;
         [SerializeField] private GameObject levelProgress;
         public Image levelProgressFill;
-        
-        [Header("Game Over Panel")]
-        [SerializeField] private TextMeshProUGUI collectedGold;
-        [SerializeField] private TextMeshProUGUI stairsCount;
-        [SerializeField] private TextMeshProUGUI purpleScoreCount;
-        [SerializeField] private TextMeshProUGUI collectedCubesCount;
 
+        #region GameOverPanel
+        [Serializable]
+        public struct GameOverPanel
+        {
+            [SerializeField] internal TextMeshProUGUI collectedGold;
+            [SerializeField] internal TextMeshProUGUI stairsCount;
+            [SerializeField] internal TextMeshProUGUI purpleScoreCount;
+            [SerializeField] internal TextMeshProUGUI collectedCubesCount;
+        }
+        #endregion
+
+        public GameOverPanel gameOverPanel;
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
@@ -62,11 +69,11 @@ namespace UI
         public void SetEndGameResults(int stairCount, int purpleCount, int collectedCubeCount)
         {
             int grandTotal = (stairCount + purpleCount + collectedCubeCount) * 2;
-            stairsCount.text = stairCount.ToString();
-            purpleScoreCount.text = purpleCount.ToString();
-            collectedCubesCount.text = collectedCubeCount.ToString();
+            gameOverPanel.stairsCount.text = stairCount.ToString();
+            gameOverPanel.purpleScoreCount.text = purpleCount.ToString();
+            gameOverPanel.collectedCubesCount.text = collectedCubeCount.ToString();
 
-            collectedGold.text = "Gold: " + "+" + grandTotal;
+            gameOverPanel.collectedGold.text = "Gold: " + "+" + grandTotal;
 
             _gameManager.totalGold += grandTotal;
         }
